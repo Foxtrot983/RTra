@@ -6,11 +6,54 @@
 	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
 	<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>react send data templates</title>
 </head>
 <body>
-	<div id='root'>
+	<div id='root'></div>
+	<script type="text/babel">
 		
-	</div>
+		class Display extends React.Component {
+			render(){
+				return (
+					<div>
+						<p>{this.props.color}</p>
+						<p>{this.props.num}</p>
+						<p>{this.props.size}</p>
+					</div>
+					);
+			}
+		}
+
+		class Label extends React.Component {
+			render() {
+				return (
+					<Display {...this.props}/>	
+					);
+			}
+		}
+
+		class Shirt extends React.Component {
+			render(){
+				return(
+					<div>
+						<Label {...this.props}/>
+					</div>
+					);
+			}
+			
+		}
+
+		ReactDOM.render(
+			<div>
+				<Shirt color='steelblue' num="3.14" size = "medium" />
+			</div>,
+			document.querySelector('#root')
+			);
+
+
+
+
+
+	</script>
 </body>
 </html>
