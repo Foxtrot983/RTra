@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>  
+	<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+	<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Lifecycle</title>
+    <style>
+		#root {
+			padding: 50px;
+			background-color: rgb(87, 87, 87);
+		}
+	</style>
+</head>
+<body>
+    <div id="root"></div>
+    <div id="root2"></div>
+
+    <script type="text/babel">
+        let destination = document.querySelector("#root");
+        let dest2 = document.querySelector('#root2');
+
+        class Counter extends React.Component {
+            render() {
+                let textStyle = {
+                    fontSize: 72,
+                    fontFamily: "sans-serif",
+                    color: "#333",
+                    fontWeight: "bold",
+
+                };
+
+                return (
+                    <div style={textStyle}>
+                        {this.props.display}
+                    </div>
+                    );
+            }
+        }
+
+        class CounterParent extends React.Component {
+            constructor(props){
+                super(props);
+
+                this.state = {
+                    count: 0
+                };
+                this.increase = this.increase.bind(this);
+
+            }
+
+            increase(e){
+                console.log(e);
+                let currentCount = this.state.count;
+
+                if (e.ctrlKey){
+                    currentCount += 10;
+                } else if (e.shiftKey) {currentCount +=100} else {currentCount++}
+                
+                this.setState({
+                    count: currentCount
+                });
+            }
+
+            componentWillUpdate(newProps, currentProps) {
+                console.log("componentWillUpdate: Component is about to update");
+            }
+
+
+            componentDidUpdate(currentProps, currentState) {
+                console.log("componentDidUpdate: Component just updated!")
+            }
+
+            componentWillMount() {
+                console.log("componentWillMount: component is about to mount!")
+            }
+
+            componentDidMount() {
+                console.log("componentDidMount: Component just mounted!");
+            }
+
+            componentWillUnmount() {
+                console.log("componentWillUnmount: Component is about to be removed from the DOM!");
+            }       
+
+            shouldComponentUpdate(newProps, newState) {
+                console.log("shouldComponentUpdate: Should component update?");
+
+                if (newState.count < 5) {
+                    console.log("shouldComponentUpdate: Component should update");
+                    return true;
+                } else {
+                    ReactDOM.unmountComponentAtNode(destination);
+                    console.log("shouldComponentUpdate: Component will get new props!");
+                    
+                    return false;
+                }
+            }
+
+            componentWillReceiveProps(newProps) {
+                console.log("componentWillReceiveProps: Component will get new props!");
+            }
+
+
+            render() {
+
+                let backgroundStyle = {
+                    padding: 50,
+                    backgroundColor: "#FFC53A",
+                    width: 250,
+                    height: 100,
+                    borderRadius: 10,
+                    textAlign: "center",
+                };
+
+                let buttonStyle = {
+                    fontSize: "1em",
+                    width: 30,
+                    height: 30,
+                    fontFamily: "sans-serif",
+                    color: "#333",
+                    fontWeight: "bold",
+                    lineHeight: "3px", 
+                }
+
+
+                return (
+                    <div style={backgroundStyle}>
+                        <Counter display={this.state.count} />
+                        <button onClick={this.increase} style={buttonStyle}>+</button>
+                    </div>
+                    );
+
+            }
+        }
+
+
+        ReactDOM.render(
+            <div>
+                <CounterParent />
+            </div>,
+            destination
+            );
+    </script>
+</body>
+</html>
