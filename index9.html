@@ -66,35 +66,35 @@
             }
 
             componentWillUpdate(newProps, currentProps) {
-                console.log("componentWillUpdate: Component is about to update");
+                alert("componentWillUpdate: Component is about to update");
             }
 
 
             componentDidUpdate(currentProps, currentState) {
-                console.log("componentDidUpdate: Component just updated!")
+                alert("componentDidUpdate: Component just updated!")
             }
 
             componentWillMount() {
-                console.log("componentWillMount: component is about to mount!")
+                alert("componentWillMount: component is about to mount!")
             }
 
             componentDidMount() {
-                console.log("componentDidMount: Component just mounted!");
+                alert("componentDidMount: Component just mounted!");
             }
 
             componentWillUnmount() {
-                console.log("componentWillUnmount: Component is about to be removed from the DOM!");
+                alert("componentWillUnmount: Component is about to be removed from the DOM!");
             }       
 
             shouldComponentUpdate(newProps, newState) {
-                console.log("shouldComponentUpdate: Should component update?");
+                alert("shouldComponentUpdate: Should component update?");
 
                 if (newState.count < 5) {
-                    console.log("shouldComponentUpdate: Component should update");
+                    alert("shouldComponentUpdate: Component should update");
                     return true;
                 } else {
                     ReactDOM.unmountComponentAtNode(destination);
-                    console.log("shouldComponentUpdate: Component will get new props!");
+                    alert("shouldComponentUpdate: Component will get new props!");
                     
                     return false;
                 }
